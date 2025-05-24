@@ -1,75 +1,49 @@
-# React Authentication App with Supabase
+# Calculadora con Supabase Edge Function
 
-A simple React application with authentication screens including Login, Signup, and a Home page, connected to Supabase for backend authentication.
+Este proyecto es una aplicación web hecha con **Vite + React + TypeScript** que permite a usuarios autenticados realizar operaciones matemáticas básicas (suma, resta, multiplicación y división) usando una **Edge Function de Supabase**.
 
-## Features
+## ¿Qué hace este proyecto?
 
-- Login page with Supabase authentication
-- Signup page with Supabase user registration
-- Home page with logout functionality
-- Routing between pages
+- Permite registrarse e iniciar sesión (incluyendo Google).
+- Solo usuarios autenticados pueden acceder a la calculadora.
+- La calculadora permite sumar, restar, multiplicar y dividir dos números.
+- El cálculo se realiza en una Edge Function de Supabase (no en el frontend).
+- El resultado se muestra en pantalla de forma clara y moderna.
 
-## Getting Started
+## ¿Cómo funciona la Edge Function?
 
-### Prerequisites
+1. El frontend envía una petición a la función `calculator` en Supabase, indicando la operación y los números.
+2. La Edge Function recibe la petición, realiza la operación y devuelve el resultado.
+3. El frontend muestra el resultado al usuario.
 
-- Node.js (version 14 or higher)
-- npm or yarn
-- Supabase account and project
+### ¿Cómo logré que funcione la Edge Function?
 
-### Installation
+- Creé la función en el dashboard de Supabase, en la sección **Edge Functions**.
+- El código de la función responde correctamente a las peticiones CORS (incluye el header `Access-Control-Allow-Origin` y responde a OPTIONS).
+- El frontend usa el cliente de Supabase para invocar la función de forma segura y autenticada.
 
-1. Clone the repository
-2. Install dependencies:
+## Instalación y uso
 
-```bash
-npm install
-```
-
-3. Configure your Supabase credentials:
-   - Create a file named `.env.local` in the project root
-   - Add the following environment variables:
+1. Cloná el repo:
+   ```bash
+   git clone https://github.com/FranciscoCardo09/calculadora-supabase.git
+   cd calculadora-supabase
    ```
-   VITE_SUPABASE_URL=https://your_project_id.supabase.co
-   VITE_SUPABASE_ANON_KEY=your_VITE_SUPABASE_ANON_KEY
+
+2. Instalá dependencias:
+   ```bash
+   npm install
    ```
-   - Replace `your_VITE_SUPABASE_ANON_KEY` with your actual Supabase anon/public key
 
-4. Start the development server:
+3. Configurá las variables de entorno en `.env.local`:
+   ```
+   VITE_SUPABASE_URL=tu_url_supabase
+   VITE_SUPABASE_ANON_KEY=tu_anon_key
+   ```
 
-```bash
-npm run dev
-```
+4. Iniciá el proyecto:
+   ```bash
+   npm run dev
+   ```
 
-5. Open your browser and navigate to `http://localhost:5173`
-
-## Technologies Used
-
-- React
-- TypeScript
-- React Router
-- Vite
-- Supabase (Authentication & Backend)
-
-## Project Structure
-
-```
-src/
-  ├── lib/
-  │   └── supabaseClient.ts
-  ├── pages/
-  │   ├── Home.tsx
-  │   ├── Login.tsx
-  │   └── Signup.tsx
-  ├── App.tsx
-  ├── App.css
-  ├── config.ts
-  ├── main.tsx
-  └── index.css
-```
-
-## Notes
-
-- You must set up your own Supabase project and configure the environment variables for authentication to work
-- For production, ensure you properly secure your environment variables
-- Consider implementing additional features like password reset, email verification, and profile management
+5. ¡Listo! Registrate, logueate y usá la calculadora.
