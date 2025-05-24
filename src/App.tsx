@@ -3,6 +3,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ProtectedRoute from './components/ProtectedRoute';
+import Calculator from './components/Calculator';
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
             {/* Protected routes */}
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home />} />
+              <Route path="/calculator" element={<Calculator />} />
             </Route>
             
             {/* Redirect any unmatched route to login */}

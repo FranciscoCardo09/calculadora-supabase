@@ -1,6 +1,7 @@
 import { type FC, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
+import { GoogleLogo } from 'phosphor-react';
 
 const Login: FC = () => {
   const [email, setEmail] = useState('');
@@ -37,10 +38,34 @@ const Login: FC = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+    try {
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+      });
+
+      if (error) {
+        setError(error.message);
+        return;
+      }
+
+      if (data?.url) {
+        // Supabase will handle the redirect
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      setError('An unexpected error occurred during Google Sign-In');
+      console.error('Google Sign-In error:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="container">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="email-form">
         {error && <div className="error-message">{error}</div>}
         <div>
           <label htmlFor="email">Email</label>
@@ -66,11 +91,21 @@ const Login: FC = () => {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      <p>
-        Don't have an account? <Link to="/signup">Sign up</Link>
-      </p>
+      <div className="auth-options">
+        <button
+          onClick={handleGoogleSignIn}
+          className="google-signin-btn"
+          disabled={loading}
+        >
+          <GoogleLogo size={24} weight="bold" className="google-icon" />
+          Sign in with Google
+        </button>
+      </div>
+      <div className="auth-links">
+        <Link to="/signup">Don't have an account? Sign up</Link>
+      </div>
     </div>
   );
 };
 
-export default Login; 
+export default Login;

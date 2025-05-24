@@ -1,5 +1,5 @@
 import { type FC, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import { VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY } from '../config';
 
@@ -22,7 +22,20 @@ const styles = {
     color: '#666',
     fontStyle: 'italic',
   },
+  nav: {
+    marginBottom: '2rem',
+  },
+  navLink: {
+    display: 'inline-block',
+    padding: '0.5rem 1rem',
+    backgroundColor: '#4CAF50',
+    color: 'white',
+    textDecoration: 'none',
+    borderRadius: '4px',
+    marginRight: '1rem',
+  },
 } as const;
+
 const Home: FC = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
@@ -110,13 +123,12 @@ const Home: FC = () => {
 
   return (
     <div className="container">
-      <h1>Excuse Me!</h1>
+      <h1>¡Bienvenido!</h1>
       <img 
         className="inner-container"
         src="https://pnctschmbeqswueglzaz.supabase.co/storage/v1/object/public/assets/oops.png"
         alt="A cute raccoon peeking out from behind a trash can, with a surprised expression"
       />
-      
       {user && (
         <div className="user-info">
           <p>Logged in as: {user.email}</p>
@@ -125,18 +137,20 @@ const Home: FC = () => {
           )}
         </div>
       )}
-      
-      <div style={styles.buttons}>
-        <button onClick={() => fetchExcuse('en')}>Get English Excuse</button>
-        <button onClick={() => fetchExcuse('es')}>Get Spanish Excuse</button>
+      <div style={{ display: 'flex', justifyContent: 'center', margin: '2rem 0' }}>
+        <Link to="/calculator" style={{
+          display: 'inline-block',
+          padding: '1rem 2rem',
+          background: 'linear-gradient(90deg, #43e97b 0%, #38f9d7 100%)',
+          color: '#222',
+          fontWeight: 'bold',
+          fontSize: '1.3rem',
+          borderRadius: '2rem',
+          textDecoration: 'none',
+          boxShadow: '0 4px 16px rgba(60,200,150,0.15)',
+          transition: 'transform 0.1s',
+        }}>Ir a la Calculadora</Link>
       </div>
-      {excuse && (
-        <div style={styles.display}>
-          <p>{excuse}</p>
-          <small style={styles.language}>Language: {language === 'en' ? 'English' : 'Spanish'}</small>
-        </div>
-      )}
-      
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
