@@ -1,5 +1,7 @@
 # Calculadora con Supabase Edge Function
 
+![Calculadora Screenshot](./public/screenshot.png)
+
 Este proyecto es una aplicación web hecha con **Vite + React + TypeScript** que permite a usuarios autenticados realizar operaciones matemáticas básicas (suma, resta, multiplicación y división) usando una **Edge Function de Supabase**.
 
 ## ¿Qué hace este proyecto?
